@@ -1,8 +1,16 @@
 using CommandLine;
-using System.Collections.Generic;
 
-public class Options
+namespace HelloDotNet
 {
-    [Value(0, MetaName = "text", HelpText = "Text to write in ASCII art.", Required = true)]
-    public required IEnumerable<string> Texts { get; set; }
+    public record Options
+    {
+        [Value(0, Required = true)]
+        public string? Text { get; init; }
+
+        [Option('f', "font")]
+        public string? Font { get; init; }
+
+        [Option('h', "help", Default = false, HelpText = "Display help information.")]
+        public bool Help { get; init; }
+    }
 }
