@@ -1,35 +1,17 @@
-﻿using CommandLine;
-using System;
-using System.Collections.Generic;
+using CommandLine;
+using Figgle;
+using HelloDotNet;
 
-class Program
+namespace HelloDotNet
 {
-    static void Main(string[] args)
+    class Program
     {
-        Parser.Default.ParseArguments<Options>(args)
-            .WithParsed(opts =>
-            {
-                WriteAsciiArt(opts.Texts);
-            })
-            .WithNotParsed(errs => ShowHelp());
-    }
-
-    static void ShowHelp()
-    {
-        Console.WriteLine("Available Fonts:");
-        var fonts = AsciiArt.GetAvailableFonts();
-        foreach (var font in fonts)
+        static void Main(string[] args)
         {
-            Console.WriteLine($"- {font}");
-        }
-    }
-
-    static void WriteAsciiArt(IEnumerable<string> texts)
-    {
-        foreach (var text in texts)
-        {
-            Console.WriteLine($"ASCII Art for: {text}");
-           
+            Parser.Default.ParseArguments<Options>(args)
+                .WithParsed(AsciiArt.Write)
+                .WithNotParsed(errors =>
+                    Console.WriteLine("Usage: HelloDotNet <Text> --font <FontName>"));
         }
     }
 }
